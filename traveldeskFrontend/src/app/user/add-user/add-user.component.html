@@ -1,0 +1,328 @@
+<!-- 
+
+<div class="registration-form m-3 p-4">
+  <form [formGroup]="dataForm">
+    <div class="row">
+
+
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>First Name</mat-label>
+          <input formControlName="firstName" matInput placeholder="firstName">
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>LastName</mat-label>
+          <input formControlName="lastName" matInput placeholder="lastName">
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input type="email" formControlName="email" matInput placeholder="email">
+          <mat-icon matSuffix>mail_outline</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Password </mat-label>
+          <input type="password" formControlName="password" matInput placeholder="password">
+          <mat-icon matSuffix>lock</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Mobile</mat-label>
+          <input type="text" formControlName="contactNumber" matInput placeholder="mobile">
+          <mat-icon matSuffix>mobile_screen_share</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6 ">
+        <mat-form-field appearance="outline">
+          <mat-label>Select Department</mat-label>
+          <mat-select formControlName="departmentId">
+            <mat-option *ngFor="let dept of departments" [value]="dept.id">
+              {{dept.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+
+      <div class="col-md-6 mt-4">
+        <mat-form-field *ngIf="managers" appearance="outline">
+          <mat-label>Select Manager</mat-label>
+          <mat-select formControlName="managerId">
+            <mat-option *ngFor="let manager of managers" [value]="manager.id">
+              {{manager.firstName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="col-md-6 mt-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Select Role</mat-label>
+          <mat-select formControlName="roleId">
+            <mat-option *ngFor="let role of roles" [value]="role.id">
+              {{role.value}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+    </div>
+    <button *ngIf="!isUpdateActive" (click)="submit()" mat-raised-button color="accent">Submit</button>
+    <button *ngIf="isUpdateActive" (click)="updateUser()" mat-raised-button color="accent">Update</button>
+  </form>
+</div> -->
+<!-- <div class="logo text-center">
+
+    <img width="300" src="assets/gymlogo.png" alt="">
+
+  </div> -->
+
+
+
+
+  <div class="registration-form m-3 p-4">
+
+    <form [formGroup]="dataForm">
+  
+      <div class="row">
+  
+  
+  
+  
+  
+        <div class="col-md-6">
+  
+          <mat-form-field appearance="outline">
+  
+            <mat-label>First Name</mat-label>
+  
+            <input formControlName="firstName" matInput placeholder="First Name" pattern="[a-zA-Z ]*" required>
+  
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+  
+            <mat-error *ngIf="dataForm.get('firstName')?.hasError('required')">
+  
+              First Name is required.
+  
+            </mat-error>
+  
+            <mat-error *ngIf="dataForm.get('firstName')?.hasError('pattern')">
+  
+              Only characters are allowed in the First Name field.
+  
+            </mat-error>
+  
+          </mat-form-field>
+  
+        </div>
+  
+       
+  
+        <div class="col-md-6">
+  
+          <mat-form-field appearance="outline">
+  
+            <mat-label>Last Name</mat-label>
+  
+            <input formControlName="lastName" matInput placeholder="Last Name" pattern="[a-zA-Z ]*" required>
+  
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+  
+            <mat-error *ngIf="dataForm.get('lastName')?.hasError('required')">
+  
+              Last Name is required.
+  
+            </mat-error>
+  
+            <mat-error *ngIf="dataForm.get('lastName')?.hasError('pattern')">
+  
+              Only characters are allowed in the Last Name field.
+  
+            </mat-error>
+  
+          </mat-form-field>
+  
+        </div>
+  
+       
+  
+  
+  
+  
+        <div class="col-md-6">
+  
+          <mat-form-field appearance="outline">
+  
+            <mat-label>Email</mat-label>
+  
+            <input type="email" formControlName="email" matInput placeholder="Email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" >
+  
+            <mat-icon matSuffix>mail_outline</mat-icon>
+  
+            <mat-error *ngIf="dataForm.get('email')?.hasError('required')">
+  
+              Email is required.
+  
+            </mat-error>
+  
+            <mat-error *ngIf="dataForm.get('email')?.hasError('pattern')">
+  
+              Invalid email format.
+  
+            </mat-error>
+  
+          </mat-form-field>
+  
+        </div>
+  
+       
+  
+  
+  
+  
+  
+        <div class="col-md-6">
+  
+          <mat-form-field appearance="outline">
+  
+            <mat-label>Password </mat-label>
+  
+            <input type="password" formControlName="password" matInput placeholder="password" required pattern="^(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z]).{8,}$" >
+  
+            <mat-error *ngIf="dataForm.value.password">Password must be a combination of lower-case, upper-case, numbers and at least 9 characters long</mat-error>
+  
+            <mat-icon matSuffix>lock</mat-icon>
+  
+          </mat-form-field>
+  
+        </div>
+  
+  
+  
+  
+        <div class="col-md-6">
+  
+          <mat-form-field appearance="outline">
+  
+            <mat-label>Mobile</mat-label>
+  
+            <input type="text" formControlName="contactNumber" matInput placeholder="Mobile" required pattern="[0-9]{10}">
+  
+            <mat-icon matSuffix>mobile_screen_share</mat-icon>
+  
+            <mat-error *ngIf="dataForm.get('contactNumber')?.hasError('required')">
+  
+              Mobile number is required.
+  
+            </mat-error>
+  
+            <mat-error *ngIf="dataForm.get('contactNumber')?.hasError('pattern')">
+  
+              Invalid mobile number format. Please enter a 10-digit number.
+  
+            </mat-error>
+  
+          </mat-form-field>
+  
+        </div>
+  
+       
+  
+       
+  
+       
+  
+  
+  
+  
+        <div class="col-md-6 ">
+  
+          <mat-form-field appearance="outline">
+  
+            <mat-label>Select Department</mat-label>
+  
+            <mat-select formControlName="departmentId">
+  
+              <mat-option *ngFor="let dept of departments" [value]="dept.id">
+  
+                {{dept.value}}
+  
+              </mat-option>
+  
+            </mat-select>
+  
+          </mat-form-field>
+  
+        </div>
+  
+  
+  
+  
+  
+        <div class="col-md-6 mt-4">
+  
+          <mat-form-field *ngIf="managers" appearance="outline">
+  
+            <mat-label>Select Manager</mat-label>
+  
+            <mat-select formControlName="managerId">
+  
+              <mat-option *ngFor="let manager of managers" [value]="manager.id">
+  
+                {{manager.firstName}}
+  
+              </mat-option>
+  
+            </mat-select>
+  
+          </mat-form-field>
+  
+        </div>
+  
+  
+  
+  
+        <div class="col-md-6 mt-4">
+  
+          <mat-form-field appearance="outline">
+  
+            <mat-label>Select Role</mat-label>
+  
+            <mat-select formControlName="roleId">
+  
+              <mat-option *ngFor="let role of roles" [value]="role.id">
+  
+                {{role.value}}
+  
+              </mat-option>
+  
+            </mat-select>
+  
+          </mat-form-field>
+  
+        </div>
+  
+  
+  
+  
+      </div>
+  
+      <button *ngIf="!isUpdateActive" (click)="submit()" mat-raised-button color="accent"  >Submit</button>
+  
+      <button *ngIf="isUpdateActive" (click)="updateUser()" mat-raised-button color="accent">Update</button>
+  
+    </form>
+  
+  </div>

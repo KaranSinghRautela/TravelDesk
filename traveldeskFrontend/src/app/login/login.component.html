@@ -1,0 +1,91 @@
+<!-- <div class="logo text-center">
+    <img width="300" src="https://cdnimages.myclassboard.com/Website-2022/Home/LMSvc.svg" alt="">
+   
+  </div>
+  
+  <div class="registration-form m-3 p-4">
+    <form [formGroup]="dataForm">
+      <div class="row">
+
+        
+        <div class="col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input type="email" formControlName="Email" matInput placeholder="email">
+            <mat-icon matSuffix>mail_outline</mat-icon>
+          </mat-form-field>
+        </div>
+
+
+        <div class="col-md-6">
+            <mat-form-field appearance="outline">
+
+              <mat-label> Password</mat-label>
+              <input formControlName="Password" matInput [type]="hide ? 'password' : 'text'">
+              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+
+              
+            </mat-form-field>
+          </div>
+  
+      </div>
+      <button  (click)="login()" mat-raised-button color="accent">Login</button>
+    </form>
+  </div> -->
+  <div class="logo text-center">
+
+    <img width="300" src="https://cdnimages.myclassboard.com/Website-2022/Home/LMSvc.svg" alt="">
+  
+  </div>
+  
+   
+  
+  <div class="registration-form m-3 p-4">
+  
+    <form [formGroup]="dataForm">
+  
+      <div class="row">
+  
+        <div class="col-md-6">
+  
+          <mat-form-field appearance="outline">
+  
+            <mat-label>Email</mat-label>
+  
+            <input type="email" formControlName="Email" matInput placeholder="email">
+  
+            <mat-icon matSuffix>mail_outline</mat-icon>
+  
+          </mat-form-field>
+  
+        </div>
+  
+   
+  
+        <div class="col-md-6">
+  
+          <mat-form-field appearance="outline">
+  
+            <mat-label>Password</mat-label>
+  
+            <input formControlName="Password" matInput [type]="hide ? 'password' : 'text'">
+  
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+  
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+  
+            </button>
+  
+          </mat-form-field>
+  
+        </div>
+  
+      </div>
+  
+      <button (click)="login()" mat-raised-button color="accent" [disabled]="!dataForm.valid">Login</button>
+  
+    </form>
+  
+  </div>

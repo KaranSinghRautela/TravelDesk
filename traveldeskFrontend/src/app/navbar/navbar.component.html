@@ -1,0 +1,30 @@
+<mat-toolbar color="primary">
+    <h1>Travel Desk </h1>
+    <span class="example-spacer"></span>
+    <div *ngIf="IsLoggedIn()">
+      <span>{{GetUserName()|uppercase}}</span>
+      <span class="space"></span>
+      <button class="btn"[routerLink]="getHomeLink()" mat-raised-button color="accent">Home</button>
+</div>
+    <div *ngIf="getUserRole()==='Admin'">
+    <button class="btn"  routerLink="/addUser" mat-raised-button color="accent">Add
+        User</button>
+</div>
+<div *ngIf="getUserRole()==='Employee'">
+    <button class="btn"  routerLink="/addRequest" mat-raised-button color="accent">Add
+        Request</button>
+</div>
+
+    <button class="btn" *ngIf="IsLoggedIn()" mat-raised-button color="accent" (click)="logout()"> Logout </button>
+
+
+
+</mat-toolbar>
+
+
+<div style="height:100%" class="container mt-4">
+    <router-outlet> </router-outlet>
+</div>
+
+<lib-ng-toast></lib-ng-toast>
+<ng-confirm></ng-confirm>

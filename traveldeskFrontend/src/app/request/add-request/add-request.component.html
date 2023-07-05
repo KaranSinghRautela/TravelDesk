@@ -1,0 +1,340 @@
+
+<div class="form-box">
+  <h2>Request Form</h2>
+  <form #form='ngForm'(ngSubmit)="AddRequest(form)"> 
+    <!-- <div class="form-group">
+      <label for="userId">User ID:</label>
+      <input type="text" id="userId" name="userId" ngModel required>
+    </div> -->
+
+    <!-- <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" [(ngModel)]="username" required>
+    </div> -->
+
+    <!-- <div class="form-group">
+      <label for="projectName">Project Name:</label>
+      <input type="text" id="projectName" name="projectName" ngModel required>
+    </div>
+
+    <div class="form-group">
+      <label for="departmentName">Department Name:</label>
+      <input type="text" id="departmentName" name="departmentName" ngModel required>
+    </div> -->
+
+    <div class="form-group">
+      <label for="reason">Reason for Travelling:</label>
+      <input type="text" id="reason" name="reason" ngModel required/>
+      <div *ngIf="form.controls['reason'].invalid && (form.controls['reason'].dirty || form.controls['reason'].touched)">
+      <div *ngIf="form.controls['reason'].errors?.['required']"><p class="text-danger">Reason is required!!</p></div>
+</div>
+    </div>
+
+    <div class="form-group">
+      <label for="adhaar">Adhaar Card Number:</label>
+      <input type="text" id="adhaar" name="adhaar" ngModel required maxlength="12" minlength="12"/>
+      <div *ngIf="form.controls['adhaar'].invalid && (form.controls['adhaar'].dirty || form.controls['adhaar'].touched)">
+      <div *ngIf="form.controls['adhaar'].errors?.['required']"><p class="text-danger">Aadhaar Card Number is required.</p></div>
+      <div *ngIf="form.controls['adhaar'].errors?.['maxlength']"><p class="text-danger">Aadhaar Card Number cannot exceed 12 digits.</p>
+</div>
+<div *ngIf="form.controls['adhaar'].errors?.['minlength']"><p class="text-danger">Aadhaar Card Number cannot be less than 12 digits.</p>
+</div>
+</div>
+    </div>
+    <div class="form-group">
+        <label for="manager">Manager: </label>
+        <select id="manager" name="manager" ngModel>
+          <option ngValue="">Select</option>
+          <option *ngFor="let m of managers" ngValue="{{ m.id }}">
+            <h4>{{ m.firstName }}</h4>
+          </option>
+        </select>
+        </div>
+        <div class="form-group">
+            <label for="project">Project: </label>
+            <select id="project" name="project" ngModel>
+              <option ngValue="">Select</option>
+              <option *ngFor="let m of projects" ngValue="{{ m.id }}">
+                <h4>{{ m.projectName }}</h4>
+              </option>
+            </select>
+            </div>
+
+    <div class="form-group">
+      <label for="bookingType">Type of Booking:</label>
+      <select id="bookingType" name="bookingType" [(ngModel)]="selectedBookingType" >
+        <option value="">Select Type</option>
+        <option value="Flight">Flight</option>
+        <option value="Hotel">Hotel</option>
+        <option value="Both">Both</option>
+      </select>
+    </div>
+
+    <div *ngIf="selectedBookingType === 'Flight'">
+     
+          <h3>Flight Details</h3>
+        
+          <div>
+            <label>
+              Type of Flight : <input type="radio" name="flightSelection" value="international" ngModel>International
+              <input type="radio" name="flightSelection" value="domestic" ngModel>Domestic<br><br>
+              <div *ngIf="form.controls['flightSelection'].invalid && form.controls['flightSelection'].touched" class="text-danger"> Type of Flight is required. </div>
+            </label>
+          </div>
+          
+          
+        
+        
+        
+          <div class="form-group">
+            <div class="row">
+              <div class="col">
+                <label for="departure">Departure : </label>
+                <input type="date" id="departure" name="departure" ngModel>
+              </div>
+              <div class="col">
+                <label for="return">Return : </label>
+                <input type="date" id="return" name="return" ngModel>
+              </div>
+            </div>
+            <div *ngIf="form.controls['return'].value && form.controls['departure'].value && form.controls['return'].value < form.controls['departure'].value">
+              <p class="text-danger"> Return date should be greater than Departure date.</p>
+    </div>
+          </div>
+        
+          <div class="form-group">
+            <div class="row">
+              <div class="col">
+                <label for="from">From: </label>
+                <select id="from" name="from" ngModel #fromControl="ngModel" required>
+                  <option ngValue="">Select</option>
+                  <option *ngFor="let m of cities" ngValue="{{ m.id }}">
+                    <h4>{{ m.value }}</h4>
+                  </option>
+                </select>
+              </div>
+              <div class="col">
+                <label for="to">To: </label>
+                <select id="to" name="to" ngModel #toControl="ngModel" required>
+                  <option ngValue="">Select</option>
+                  <option *ngFor="let m of cities" ngValue="{{ m.id }}">
+                    <h4>{{ m.value }}</h4>
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div *ngIf="fromControl.value === toControl.value && fromControl.dirty && toControl.dirty">
+              <p class="text-danger">From and To values must not be equal.</p>
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <label for="visaNumber">Visa Number : </label>
+            <input type="text" id="visaNumber" name="visaNumber" ngModel>
+          </div>
+        
+          <div class="form-group">
+            <div class="row">
+              <div class="col">
+                <label for="visaFile">Visa File : </label>
+                <input type="file" id="visaFile" name="visaFile" ngModel>
+              </div>
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <label for="passportNumber">Passport Number :</label>
+            <input type="text" id="passportNumber" name="passportNumber" ngModel>
+          </div>
+        
+          <div class="form-group">
+            <div class="row">
+              <div class="col">
+                <label for="passportFile">Passport File : </label>
+                <input type="file" id="passportFile" name="passportFile" ngModel>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+
+        <div *ngIf="selectedBookingType === 'Hotel'">
+          <!-- <h3>Traveling Details</h3> -->
+        
+          <!-- Existing fields for flight details -->
+        
+          <h3>Hotel Details</h3>
+        
+          <div class="form-group">
+            <div class="row">
+              <div class="col">
+            <label for="stayingFrom">Check-in :</label>
+            <input type="date" id="stayingFrom" name="stayingFrom" ngModel>
+          </div>
+          <div class="col">
+            <label for="stayingTill">Check-out : </label>
+            <input type="date" id="stayingTill" name="stayingTill" ngModel>
+          </div>
+        </div>
+        </div>
+        
+          <!-- <div class="form-group">
+            <label for="mealPreference">Meal Preference : </label>
+            <input type="text" id="mealPreference" name="mealPreference">
+          </div> -->
+
+          <div class="form-group">
+            <label for="mealPreference">Meal Preference : </label>
+            <select id="mealPreference" name="mealPreference" ngModel>
+              <option ngValue="">Select</option>
+              <option *ngFor="let m of mealpreference" ngValue="{{ m.id }}">
+                <h4>{{ m.value }}</h4>
+              </option>
+            </select>
+    
+          </div>
+          <div class="form-group">
+            <label for="numberOfMeals">Meal Combo : </label>
+            <select id="numberOfMeals" name="numberOfMeals" ngModel>
+              <option ngValue="">Select</option>
+              <option *ngFor="let m of noofmeals" ngValue="{{ m.id }}">
+                <h4>{{ m.value }}</h4>
+              </option>
+            </select>
+          </div>
+        
+          <!-- <div class="form-group">
+            <label for="numberOfMeals">Number of Meals : </label>
+            <input type="number" id="numberOfMeals" name="numberOfMeals">
+          </div>-->
+        </div>
+        
+        <div *ngIf="selectedBookingType === 'Both'">
+          <h3>Flight Details</h3>
+        
+          <div class="form-group">
+            <label for="flightType">Type of Flight</label>
+            
+          </div>
+          <div>
+            <label>
+              Type of Flight : <input type="radio" name="flightSelection" value="international" ngModel>International
+              <input type="radio" name="flightSelection" value="domestic" ngModel>Domestic<br><br>
+            </label>
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="col">
+                <label for="departure">Departure : </label>
+                <input type="date" id="departure" name="departure" ngModel>
+              </div>
+              <div class="col">
+                <label for="return">Return : </label>
+                <input type="date" id="return" name="return" ngModel>
+              </div>
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <div class="row">
+              <div class="col">
+                <label for="from">From: </label>
+                <select id="from" name="from" ngModel  required>
+                  <option ngValue="">Select</option>
+                  <option *ngFor="let m of cities" ngValue="{{ m.id }}">
+                    <h4>{{ m.value }}</h4>
+                  </option>
+                </select>
+              </div>
+              <div class="col">
+                <label for="to">To: </label>
+                <select id="to" name="to" ngModel required>
+                  <option ngValue="">Select</option>
+                  <option *ngFor="let m of cities" ngValue="{{ m.id }}">
+                    <h4>{{ m.value }}</h4>
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <label for="visaNumber">Visa Number : </label>
+            <input type="text" id="visaNumber" name="visaNumber" ngModel>
+          </div>
+        
+          <div class="form-group">
+            <div class="row">
+              <div class="col">
+                <label for="visaFile">Visa File : </label>
+                <input type="file" id="visaFile" name="visaFile" ngModel>
+              </div>
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <label for="passportNumber">Passport Number :</label>
+            <input type="text" id="passportNumber" name="passportNumber" ngModel>
+          </div>
+        
+          <div class="form-group">
+            <div class="row">
+              <div class="col">
+                <label for="passportFile">Passport File : </label>
+                <input type="file" id="passportFile" name="passportFile" ngModel>
+              </div>
+            </div>
+          </div>
+          <h3>Hotel Details</h3>
+        
+          <div class="form-group">
+            <div class="row">
+              <div class="col">
+            <label for="stayingFrom">Check-in :</label>
+            <input type="date" id="stayingFrom" name="stayingFrom" ngModel>
+          </div>
+          <div class="col">
+            <label for="stayingTill">Check-out : </label>
+            <input type="date" id="stayingTill" name="stayingTill" ngModel>
+          </div>
+        </div>
+        </div>
+        
+          <!-- <input type="checkbox" id="checkHotel" (click)="checkHotelMeal()" [(ngModel)]="checkHotel" [ngModelOptions]="{standalone: true}">
+
+          <label for="checkHotel">Hotel Required</label> -->
+  
+  
+  
+  
+          <!--Meal Preference-->
+  
+          <div class="form-group">
+            <label for="mealPreference">Meal Preference : </label>
+            <select id="mealPreference" name="mealPreference" ngModel>
+              <option ngValue="">Select</option>
+              <option *ngFor="let m of mealpreference" ngValue="{{ m.id }}">
+                <h4>{{ m.value }}</h4>
+              </option>
+            </select>
+    
+          </div>
+          
+
+            <div class="form-group">
+              <label for="numberOfMeals">Meal Combo You Want: </label>
+              <select id="numberOfMeals" name="numberOfMeals" ngModel>
+                <option ngValue="">Select</option>
+                <option *ngFor="let m of noofmeals" ngValue="{{ m.id }}">
+                  <h4>{{ m.value }}</h4>
+                </option>
+              </select>
+            </div>
+            </div>
+        
+        
+
+ <button type="submit"> Save and continue</button>
+  </form>
+</div>
+

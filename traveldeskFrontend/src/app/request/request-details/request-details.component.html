@@ -1,0 +1,106 @@
+<mat-card class="example-card text-center">
+    <!-- <mat-card-header class="justify-content-center">
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{reqDetails.requestId}} {{userDetails.lastName}}</mat-card-title>
+      <mat-card-subtitle>{{userDetails.email}}</mat-card-subtitle>
+    </mat-card-header> -->
+  
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item>
+          <div matLine>
+            RequestId :
+            <button mat-button>{{reqDetails.id}}</button>
+          </div>
+        </mat-list-item>
+  
+        <mat-list-item>
+          <div matLine>
+            Manager :
+            <!-- <button mat-button>{{userDetails.managerName}}</button> -->
+            <button mat-button>{{reqDetails.managerName}}</button>
+          </div>
+        </mat-list-item>
+        <mat-list-item>
+          <div matLine>
+            Project :
+            <!-- <button mat-button>{{userDetails.departmentName}}</button> -->
+            <button mat-button>{{reqDetails.projectName}}</button>
+          </div>
+        </mat-list-item>
+        <mat-list-item>
+          <div matLine>
+            Reason :
+            <!-- <button mat-button>{{userDetails.roleName}}</button> -->
+            <button mat-button>{{reqDetails.reasonForTravelling}}</button>
+          </div>
+        </mat-list-item>
+        <mat-list-item>
+            <div matLine>
+              Status :
+              <!-- <button mat-button>{{userDetails.roleName}}</button> -->
+              <button mat-button>{{reqDetails.status}}</button>
+            </div>
+          </mat-list-item>
+  
+        <mat-list-item>
+          <div matLine>
+            Created By :
+            <button mat-button>{{reqDetails.createdBy}}</button>
+          </div>
+        </mat-list-item>
+  
+        <mat-list-item>
+          <div matLine>
+            Created Date :
+            <button mat-button>{{reqDetails.createdDate | date}}</button>
+          </div>
+        </mat-list-item>
+  
+  
+        <mat-list-item>
+          <div matLine>
+            Moadified By :
+            <button mat-button>{{reqDetails.modifiedBy}}</button>
+          </div>
+        </mat-list-item>
+  
+        <mat-list-item>
+          <div matLine>
+            Modified Date :
+            <button mat-button>{{reqDetails.modifiedDate | date}}</button>
+          </div>
+        </mat-list-item>
+        <mat-list-item>
+          <div matLine>
+            Comments:
+            <button mat-button *ngFor="let c of comments ">{{c.commentName}}</button>
+          </div>
+        </mat-list-item>
+  
+        <mat-list-item>
+          <div matLine>
+            IsActive :
+            <button mat-button>{{reqDetails.isActive}}</button>
+          </div>
+        </mat-list-item>
+        <div class="comment-box" *ngIf="showCommentBox">
+          <textarea [(ngModel)]="comment" name="comment" placeholder="Add Comment"></textarea>
+          <!-- Additional comment box related elements -->
+        </div>
+  
+      </mat-list>
+      <div *ngIf="getUserRole()==='HR Admin'">
+      <button  mat-raised-button color="primary" >Book Hotel</button>&nbsp;&nbsp;
+      <button  mat-raised-button color="primary">Book Flight</button>&nbsp;&nbsp;
+      <button mat-raised-button style="background-color: yellow;" (click)="Return(reqDetails.id)">Return</button>
+    </div>
+    <div *ngIf="getUserRole()==='Manager'">
+      <button  mat-raised-button style="background-color: green;" (click)="Approve(reqDetails.id)">Approve</button>&nbsp;&nbsp;
+      <button mat-raised-button color="warn"(click)="Reject(reqDetails.id)">Reject</button>&nbsp;&nbsp;
+      <button mat-raised-button style="background-color: yellow;" (click)="Return(reqDetails.id)">Return</button>
+    </div>
+
+
+    </mat-card-content>
+  </mat-card>

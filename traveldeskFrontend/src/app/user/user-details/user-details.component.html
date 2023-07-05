@@ -1,0 +1,77 @@
+<mat-card class="example-card text-center">
+  <mat-card-header class="justify-content-center">
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{userDetails.firstName}} {{userDetails.lastName}}</mat-card-title>
+    <mat-card-subtitle>{{userDetails.email}}</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <mat-list>
+      <mat-list-item>
+        <div matLine>
+          Mobile Number :
+          <button mat-button>{{userDetails.contactNumber}}</button>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div matLine>
+          Manager :
+          <!-- <button mat-button>{{userDetails.managerName}}</button> -->
+          <button mat-button>{{userDetails.managerId}}</button>
+        </div>
+      </mat-list-item>
+      <mat-list-item>
+        <div matLine>
+          Department :
+          <!-- <button mat-button>{{userDetails.departmentName}}</button> -->
+          <button mat-button>{{userDetails.departmentId}}</button>
+        </div>
+      </mat-list-item>
+      <mat-list-item>
+        <div matLine>
+          Role :
+          <!-- <button mat-button>{{userDetails.roleName}}</button> -->
+          <button mat-button>{{userDetails.roleId}}</button>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div matLine>
+          Created By :
+          <button mat-button>{{userDetails.createdBy}}</button>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div matLine>
+          Created Date :
+          <button mat-button>{{userDetails.createdDate | date}}</button>
+        </div>
+      </mat-list-item>
+
+
+      <mat-list-item>
+        <div matLine>
+          Moadified By :
+          <button mat-button>{{userDetails.modifiedBy}}</button>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div matLine>
+          Modified Date :
+          <button mat-button>{{userDetails.modifiedDate | date}}</button>
+        </div>
+      </mat-list-item>
+
+      <mat-list-item>
+        <div matLine>
+          IsActive :
+          <button mat-button>{{userDetails.isActive}}</button>
+        </div>
+      </mat-list-item>
+
+    </mat-list>
+  </mat-card-content>
+</mat-card>
