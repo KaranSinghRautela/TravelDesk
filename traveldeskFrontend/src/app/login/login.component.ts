@@ -45,45 +45,28 @@ export class LoginComponent implements OnInit {
     (res:any) => {
       console.log(res);
       localStorage.setItem('token', res.token);
+      this.toastService.success({
+        detail: 'Login Successfull',
+        duration: 2000,
+      });
       
       var role = this.DecodeToken();
       if (role == 'Admin') {
-        this.toastService.success({
-          detail: 'Login Successfull',
-          duration: 2000,
-        },
-        );
         this.router.navigate(['/userList']);
         this.dataForm.reset();
       } else if (role == 'HR Admin') {
-        this.toastService.success({
-          detail: 'Login Successfull',
-          duration: 2000,
-        });
         this.router.navigate(['/requests']);
       } else if (role == 'Manager') {
-        this.toastService.success({
-          detail: 'Login Successfull',
-          duration: 2000,
-        });
         this.router.navigate(['/requests']);
       } else if (role == 'Employee') {
-        this.toastService.success({
-          detail: 'Login Successfull',
-          duration: 2000,
-        });
         this.router.navigate(['/requests']);
-      } else {
-        this.toastService.success({
-          detail: 'UNSUCCESSFULL',
-          summary: 'Please Try Again ',
-          duration: 3000,
-        });
-        this.router.navigate(['/List']);
-        this.dataForm.reset();
       }
     },(error:any)=>{
       console.error(error);
+      this.toastService.error({
+        detail:'Wrong Credentials',
+        duration:2000
+      })
       
     });
     console.log(this.dataForm.value);

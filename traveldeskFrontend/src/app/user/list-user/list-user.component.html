@@ -21,13 +21,13 @@
     <!-- First Name Column -->
     <ng-container matColumnDef="firstName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> First Name </th>
-      <td mat-cell *matCellDef="let row"> {{row.firstName}}</td>
+      <td mat-cell *matCellDef="let row"> {{row.firstName | titlecase}}</td>
     </ng-container>
 
     <!-- Last Name Column -->
     <ng-container matColumnDef="lastName">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Name </th>
-      <td mat-cell *matCellDef="let row"> {{row.lastName}} </td>
+      <td mat-cell *matCellDef="let row"> {{row.lastName | titlecase}} </td>
     </ng-container>
 
     <!-- Email Column -->
@@ -45,13 +45,13 @@
 
     <ng-container matColumnDef="managerId">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Manager </th>
-      <td mat-cell *matCellDef="let row"> {{ row.managerName}} </td>
+      <td mat-cell *matCellDef="let row"> {{ row.managerName | titlecase}} </td>
     </ng-container>
 
 
     <ng-container matColumnDef="roleId">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Role </th>
-      <td mat-cell *matCellDef="let row"> {{row.roleName}} </td>
+      <td mat-cell *matCellDef="let row"> {{row.roleName | titlecase}} </td>
     </ng-container>
 
 

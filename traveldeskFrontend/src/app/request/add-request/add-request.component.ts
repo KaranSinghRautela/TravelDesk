@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MealPreference } from 'src/app/models/MealPreference';
 import { NoOfMeals } from 'src/app/models/NoOfMeals';
@@ -17,15 +17,29 @@ import { UserService } from 'src/app/services/user.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { Cities } from 'src/app/models/Cities';
 import { NgToastService } from 'ng-angular-popup';
+import { ChangeDetectionStrategy } from '@angular/core';
+
 
 @Component({
   selector: 'app-add-request',
   templateUrl: './add-request.component.html',
-  styleUrls: ['./add-request.component.css']
+  styleUrls: ['./add-request.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddRequestComponent {
+  selectedBookingType: string = '';
+  selectedFileName:string = '';
+  @ViewChild('fileInput') fileInput: any;
+
+
+
+  ngForm!: FormGroup;
+
   constructor(private _reqService: RequestService, private formBuilder: FormBuilder, private _transportservice: TransportService, private _hotelservice: HotelService,
-    private _commonservice: CommonserviceService, private router: Router, private toastService: NgToastService, private authservice: AuthService, private _userService: UserService, private _projService: ProjectService) { }
+    private _commonservice: CommonserviceService, private router: Router, private toastService: NgToastService, private authservice: AuthService, private _userService: UserService, private _projService: ProjectService) {
+     }
+
+
   mealpreference: MealPreference[] = [];
   noofmeals: NoOfMeals[] = [];
   managers: Manager[] = [];
@@ -33,18 +47,32 @@ export class AddRequestComponent {
   cities: Cities[] = [];
   requestId = 0;
 
-
-
-  selectedBookingType: string = '';
-
-  ngForm !: FormGroup;
-
   ngOnInit(): void {
     this.GetMealPreference();
     this.GetNoOfMeals();
     this.GetManagers();
     this.GetProjects();
     this.GetCities();
+    this.ngForm = this.formBuilder.group({
+      Reason: [''],
+      Adhar: [''],
+      Manager:[''],
+      Project:[''],
+      TypeofBooking:[''],
+      Checkin:[''],
+      Checkout:[''],
+      Mealpreference:[''],
+      Mealcombo:[''],
+      Departure:[''],
+      Return:[''],
+      From:[''],
+      To:[''],
+      Passportnum:[''],
+      Passportfile:[''],
+      Visanum:[''],
+      Visafile:[''],
+      FlightSelection:['domestic']
+    });
   }
 
   request = new Request();
@@ -86,16 +114,17 @@ export class AddRequestComponent {
       }
     )
   }
-  AddRequest(form: any) {
+
+  AddRequest() {
     this.request = {
       requestId: 0,
       userId: this.authservice.getUserId(),
-      projectId: form.controls.project.value,
-      reasonForTraveling: form.controls.reason.value,
+      projectId: this.ngForm.value.Project,
+      reasonForTraveling: this.ngForm.value.Reason,
       status: "pending",
-      managerId: form.controls.manager.value,
+      managerId: this.ngForm.value.Manager,
       documentId: 1,
-      AadharNumber: form.controls.adhaar.value,
+      AadharNumber: this.ngForm.value.Adhar,
       createdBy: this.authservice.getUserName(),
       createdDate: Date.now,
       modifiedBy: this.authservice.getUserName(),
@@ -111,20 +140,20 @@ export class AddRequestComponent {
         duration: 3000,
       });
       console.log(res.requestId);
-      console.log(form.value);
+      console.log(this.ngForm.value);
       this.requestId = res.requestId;
-      console.log(form.controls.bookingType.value);
-      if (form.controls.bookingType.value == "Flight") {
-        this.AddTransportDetails(form);
+      console.log(this.ngForm.value.TypeofBooking);
+      if (this.ngForm.value.TypeofBooking == "Flight") {
+        this.AddTransportDetails();
         this.router.navigate(["/requests"]);
       }
-      else if (form.controls.bookingType.value == "Hotel") {
-        this.AddHotelDetails(form);
+      else if (this.ngForm.value.TypeofBooking == "Hotel") {
+        this.AddHotelDetails();
         this.router.navigate(["/requests"]);
       }
       else {
-        this.AddTransportDetails(form);
-        this.AddHotelDetails(form);
+        this.AddTransportDetails();
+        this.AddHotelDetails();
         this.router.navigate(["/requests"]);
       }
 
@@ -132,12 +161,13 @@ export class AddRequestComponent {
 
   }
 
+
   transport = new Transport();
 
-  AddTransportDetails(form: any) {
-    console.log(form.value);
+  AddTransportDetails() {
+    console.log(this.ngForm.value);
     var tflag = false;
-    if (form.controls.flightSelection.value == "international") {
+    if (this.ngForm.value.FlightSelection == "international") {
       tflag = true;
     }
 
@@ -147,14 +177,14 @@ export class AddRequestComponent {
       requestId: this.requestId,
       internationalTrvel: tflag,
       domesticTravel: !tflag,
-      travelDateFrom: form.controls.departure.value,
-      travelDateTo: form.controls.return.value,
+      travelDateFrom: this.ngForm.value.Departure,
+      travelDateTo: this.ngForm.value.Return,
       travelFrom: null,
-      travelFromId: form.controls.from.value,
+      travelFromId: this.ngForm.value.From,
       travelTo: null,
-      travelToId: form.controls.to.value,
-      visaNumber: form.controls.visaNumber.value,
-      passportNumber: form.controls.passportNumber.value,
+      travelToId: this.ngForm.value.To,
+      visaNumber: this.ngForm.value.Visanum,
+      passportNumber: this.ngForm.value.Passportnum,
       // adharCardNo:form.controls.AdhaarCardNumber.value,
       createdBy: this.authservice.getUserName(),
       createdDate: Date.now,
@@ -175,13 +205,13 @@ export class AddRequestComponent {
 
 
   hotel = new Hotel();
-  AddHotelDetails(form: any) {
+  AddHotelDetails() {
     this.hotel = {
       requestId: this.requestId,
-      stayDateFrom: form.controls.stayingFrom.value,
-      stayDateTo: form.controls.stayingTill.value,
-      mealPreferenceId: form.controls.mealPreference.value,
-      noOfMealsId: form.controls.numberOfMeals.value,
+      stayDateFrom: this.ngForm.value.Checkin,
+      stayDateTo: this.ngForm.value.Checkout,
+      mealPreferenceId: this.ngForm.value.Mealpreference,
+      noOfMealsId: this.ngForm.value.Mealcombo,
       createdBy: this.authservice.getUserName(),
       createdDate: Date.now,
       modifiedBy: this.authservice.getUserName(),
@@ -193,5 +223,16 @@ export class AddRequestComponent {
       console.log(res);
 
     })
+  }
+
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    this.selectedFileName = file.name;
+    // Perform necessary operations with the selected file
+    console.log('File selected:', file);
+  }
+
+  openFileInput(): void {
+    this.fileInput.nativeElement.click();
   }
 }

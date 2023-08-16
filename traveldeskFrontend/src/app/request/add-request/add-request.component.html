@@ -1,340 +1,258 @@
+  
+ <div class="registration-form m-3 p-4">
+  
+  <form [formGroup]="ngForm">
 
-<div class="form-box">
-  <h2>Request Form</h2>
-  <form #form='ngForm'(ngSubmit)="AddRequest(form)"> 
-    <!-- <div class="form-group">
-      <label for="userId">User ID:</label>
-      <input type="text" id="userId" name="userId" ngModel required>
-    </div> -->
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Reason For Travelling</mat-label>
+          <input type="text" formControlName="Reason" matInput placeholder="Reason" pattern="^[a-zA-Z\s]*$" required>
+          <mat-error *ngIf="ngForm.get('Reason')?.hasError('required')">
+            Reason is required.
+          </mat-error>
+          <mat-error *ngIf="ngForm.get('Reason')?.hasError('pattern')">
+            Only characters are allowed.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Adhar Number</mat-label>
+          <input formControlName="Adhar" pattern="^\d{12}$" matInput type="text" required>
+          <mat-error *ngIf="ngForm.get('Adhar')?.hasError('required')">
+            Aadhar Number is required.
+          </mat-error>
+          <mat-error *ngIf="ngForm.get('Adhar')?.hasError('pattern')">
+            12 digits required.
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-    <!-- <div class="form-group">
-      <label for="username">Username:</label>
-      <input type="text" id="username" name="username" [(ngModel)]="username" required>
-    </div> -->
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Manager</mat-label>
+          <mat-select formControlName="Manager" required>
+            <mat-option *ngFor="let m of managers" [value]="m.id">
+              {{m.firstName}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="ngForm.get('Manager')?.hasError('required')">
+            Select a manager please.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Project</mat-label>
+          <mat-select formControlName="Project" required>
+            <mat-option *ngFor="let p of projects" [value]="p.id">
+              {{p.projectName}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="ngForm.get('Project')?.hasError('required')">
+          Select a projet please.
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-    <!-- <div class="form-group">
-      <label for="projectName">Project Name:</label>
-      <input type="text" id="projectName" name="projectName" ngModel required>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Type of Booking</mat-label>
+          <mat-select formControlName="TypeofBooking" required>
+            <mat-option value="Flight">Flight</mat-option>
+            <mat-option value="Hotel">Hotel</mat-option>
+            <mat-option value="Both">Both</mat-option>
+          </mat-select>
+          <mat-error *ngIf="ngForm.get('TypeofBooking')?.hasError('required')">
+            Select booking type.
+          </mat-error>
+        </mat-form-field>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="departmentName">Department Name:</label>
-      <input type="text" id="departmentName" name="departmentName" ngModel required>
-    </div> -->
-
-    <div class="form-group">
-      <label for="reason">Reason for Travelling:</label>
-      <input type="text" id="reason" name="reason" ngModel required/>
-      <div *ngIf="form.controls['reason'].invalid && (form.controls['reason'].dirty || form.controls['reason'].touched)">
-      <div *ngIf="form.controls['reason'].errors?.['required']"><p class="text-danger">Reason is required!!</p></div>
-</div>
+    <div *ngIf="ngForm.get('TypeofBooking')?.value === 'Hotel' || ngForm.get('TypeofBooking')?.value === 'Both'">
+      <p>Hotel Details:</p>
+    <div class="row" >
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Check In</mat-label>
+          <input matInput formControlName="Checkin" [matDatepicker]="checkinpicker" (click)="checkinpicker.open()"  required>
+          <mat-datepicker-toggle matSuffix [for]="checkinpicker">
+          </mat-datepicker-toggle>
+          <mat-datepicker #checkinpicker></mat-datepicker>
+          <mat-error *ngIf="ngForm.get('Checkin')?.hasError('required')">
+            Check In date is required.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Check Out</mat-label>
+          <input matInput formControlName="Checkout" [matDatepicker]="checkoutpicker" (click)="checkoutpicker.open()"  required>
+          <mat-datepicker-toggle matSuffix [for]="checkoutpicker">
+          </mat-datepicker-toggle>
+          <mat-datepicker #checkoutpicker></mat-datepicker>
+          <mat-error *ngIf="ngForm.get('Checkout')?.hasError('required')">
+            Check out date is required.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Meal Preference</mat-label>
+          <mat-select formControlName="Mealpreference" required>
+            <mat-option *ngFor="let mp of mealpreference" [value]="mp.id">
+              {{mp.value}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="ngForm.get('Mealpreference')?.hasError('required')">
+            Select an option please.
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Meal Combo</mat-label>
+          <mat-select formControlName="Mealcombo" required>
+            <mat-option *ngFor="let mc of noofmeals" [value]="mc.id">
+              {{mc.value}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="ngForm.get('Mealcombo')?.hasError('required')">
+          Select an option please.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    </div>
+    <div *ngIf="ngForm.get('TypeofBooking')?.value === 'Flight' || ngForm.get('TypeofBooking')?.value === 'Both'">
+      <p>Flight Details:</p>
+      <label>Type of Flight:</label>
+      <mat-radio-group formControlName="FlightSelection" required>
+        <mat-radio-button value="domestic">Domestic</mat-radio-button>
+        <mat-radio-button value="international">International</mat-radio-button>
+      </mat-radio-group>
+      <mat-error *ngIf="ngForm.get('FlightSelection')?.hasError('required')">
+        Type of Flight is required.
+      </mat-error>
+      <div class="row" >
+        <div class="col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Departure</mat-label>
+            <input matInput formControlName="Departure" [matDatepicker]="departurepicker" (click)="departurepicker.open()"  required>
+            <mat-datepicker-toggle matSuffix [for]="departurepicker">
+            </mat-datepicker-toggle>
+            <mat-datepicker #departurepicker></mat-datepicker>
+            <mat-error *ngIf="ngForm.get('Departure')?.hasError('required')">
+              Departure date is required.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Return</mat-label>
+            <input matInput formControlName="Return" [matDatepicker]="returnpicker" (click)="returnpicker.open()"  required>
+            <mat-datepicker-toggle matSuffix [for]="returnpicker">
+            </mat-datepicker-toggle>
+            <mat-datepicker #returnpicker></mat-datepicker>
+            <mat-error *ngIf="ngForm.get('Return')?.hasError('required')">
+              Return date is required.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>From</mat-label>
+            <mat-select formControlName="From" required>
+              <mat-option *ngFor="let c of cities" [value]="c.id">
+                {{c.value}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="ngForm.get('From')?.hasError('required')">
+              Select an option please.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>To</mat-label>
+            <mat-select formControlName="To" required>
+              <mat-option *ngFor="let c of cities" [value]="c.id">
+                {{c.value}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="ngForm.get('To')?.hasError('required')">
+            Select an option please.
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Passport Number</mat-label>
+            <input matInput type="text" formControlName="Passportnum"  required>
+            <mat-error *ngIf="ngForm.get('Passportnum')?.hasError('required')">
+              Passport number is required.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Passport File</mat-label>
+            <div class="file-input-container">
+              <input type="file" (change)="onFileSelected($event)" class="file-input" #fileInput>
+              <input type="text" matInput [placeholder]="selectedFileName" [value]="selectedFileName" readonly>
+              <button mat-icon-button class="file-button" (click)="openFileInput()">
+                <mat-icon>attach_file</mat-icon>
+              </button>
+            </div>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Visa Number</mat-label>
+            <input type="text" formControlName="Visanum" matInput required>
+            <mat-error *ngIf="ngForm.get('Visanum')?.hasError('required')">
+              Visa number is required.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <!-- <div class="col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Visa</mat-label>
+            <input formControlName="Visafile"  matInput type="file" (change)="onFileSelected($event)">
+          </mat-form-field>
+        </div> -->
+        <div class="col-md-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Visa File</mat-label>
+            <div class="file-input-container">
+              <input type="file" (change)="onFileSelected($event)" class="file-input" #fileInput>
+              <input type="text" matInput [placeholder]="selectedFileName" [value]="selectedFileName" readonly>
+              <button mat-icon-button class="file-button" (click)="openFileInput()">
+                <mat-icon>attach_file</mat-icon>
+              </button>
+            </div>
+          </mat-form-field>
+        </div>
+      </div>
     </div>
 
-    <div class="form-group">
-      <label for="adhaar">Adhaar Card Number:</label>
-      <input type="text" id="adhaar" name="adhaar" ngModel required maxlength="12" minlength="12"/>
-      <div *ngIf="form.controls['adhaar'].invalid && (form.controls['adhaar'].dirty || form.controls['adhaar'].touched)">
-      <div *ngIf="form.controls['adhaar'].errors?.['required']"><p class="text-danger">Aadhaar Card Number is required.</p></div>
-      <div *ngIf="form.controls['adhaar'].errors?.['maxlength']"><p class="text-danger">Aadhaar Card Number cannot exceed 12 digits.</p>
-</div>
-<div *ngIf="form.controls['adhaar'].errors?.['minlength']"><p class="text-danger">Aadhaar Card Number cannot be less than 12 digits.</p>
-</div>
-</div>
-    </div>
-    <div class="form-group">
-        <label for="manager">Manager: </label>
-        <select id="manager" name="manager" ngModel>
-          <option ngValue="">Select</option>
-          <option *ngFor="let m of managers" ngValue="{{ m.id }}">
-            <h4>{{ m.firstName }}</h4>
-          </option>
-        </select>
-        </div>
-        <div class="form-group">
-            <label for="project">Project: </label>
-            <select id="project" name="project" ngModel>
-              <option ngValue="">Select</option>
-              <option *ngFor="let m of projects" ngValue="{{ m.id }}">
-                <h4>{{ m.projectName }}</h4>
-              </option>
-            </select>
-            </div>
+    <button (click)="AddRequest()" mat-raised-button color="accent" [disabled]="!ngForm.valid">Submit</button>
 
-    <div class="form-group">
-      <label for="bookingType">Type of Booking:</label>
-      <select id="bookingType" name="bookingType" [(ngModel)]="selectedBookingType" >
-        <option value="">Select Type</option>
-        <option value="Flight">Flight</option>
-        <option value="Hotel">Hotel</option>
-        <option value="Both">Both</option>
-      </select>
-    </div>
-
-    <div *ngIf="selectedBookingType === 'Flight'">
-     
-          <h3>Flight Details</h3>
-        
-          <div>
-            <label>
-              Type of Flight : <input type="radio" name="flightSelection" value="international" ngModel>International
-              <input type="radio" name="flightSelection" value="domestic" ngModel>Domestic<br><br>
-              <div *ngIf="form.controls['flightSelection'].invalid && form.controls['flightSelection'].touched" class="text-danger"> Type of Flight is required. </div>
-            </label>
-          </div>
-          
-          
-        
-        
-        
-          <div class="form-group">
-            <div class="row">
-              <div class="col">
-                <label for="departure">Departure : </label>
-                <input type="date" id="departure" name="departure" ngModel>
-              </div>
-              <div class="col">
-                <label for="return">Return : </label>
-                <input type="date" id="return" name="return" ngModel>
-              </div>
-            </div>
-            <div *ngIf="form.controls['return'].value && form.controls['departure'].value && form.controls['return'].value < form.controls['departure'].value">
-              <p class="text-danger"> Return date should be greater than Departure date.</p>
-    </div>
-          </div>
-        
-          <div class="form-group">
-            <div class="row">
-              <div class="col">
-                <label for="from">From: </label>
-                <select id="from" name="from" ngModel #fromControl="ngModel" required>
-                  <option ngValue="">Select</option>
-                  <option *ngFor="let m of cities" ngValue="{{ m.id }}">
-                    <h4>{{ m.value }}</h4>
-                  </option>
-                </select>
-              </div>
-              <div class="col">
-                <label for="to">To: </label>
-                <select id="to" name="to" ngModel #toControl="ngModel" required>
-                  <option ngValue="">Select</option>
-                  <option *ngFor="let m of cities" ngValue="{{ m.id }}">
-                    <h4>{{ m.value }}</h4>
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div *ngIf="fromControl.value === toControl.value && fromControl.dirty && toControl.dirty">
-              <p class="text-danger">From and To values must not be equal.</p>
-            </div>
-          </div>
-        
-          <div class="form-group">
-            <label for="visaNumber">Visa Number : </label>
-            <input type="text" id="visaNumber" name="visaNumber" ngModel>
-          </div>
-        
-          <div class="form-group">
-            <div class="row">
-              <div class="col">
-                <label for="visaFile">Visa File : </label>
-                <input type="file" id="visaFile" name="visaFile" ngModel>
-              </div>
-            </div>
-          </div>
-        
-          <div class="form-group">
-            <label for="passportNumber">Passport Number :</label>
-            <input type="text" id="passportNumber" name="passportNumber" ngModel>
-          </div>
-        
-          <div class="form-group">
-            <div class="row">
-              <div class="col">
-                <label for="passportFile">Passport File : </label>
-                <input type="file" id="passportFile" name="passportFile" ngModel>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-
-        <div *ngIf="selectedBookingType === 'Hotel'">
-          <!-- <h3>Traveling Details</h3> -->
-        
-          <!-- Existing fields for flight details -->
-        
-          <h3>Hotel Details</h3>
-        
-          <div class="form-group">
-            <div class="row">
-              <div class="col">
-            <label for="stayingFrom">Check-in :</label>
-            <input type="date" id="stayingFrom" name="stayingFrom" ngModel>
-          </div>
-          <div class="col">
-            <label for="stayingTill">Check-out : </label>
-            <input type="date" id="stayingTill" name="stayingTill" ngModel>
-          </div>
-        </div>
-        </div>
-        
-          <!-- <div class="form-group">
-            <label for="mealPreference">Meal Preference : </label>
-            <input type="text" id="mealPreference" name="mealPreference">
-          </div> -->
-
-          <div class="form-group">
-            <label for="mealPreference">Meal Preference : </label>
-            <select id="mealPreference" name="mealPreference" ngModel>
-              <option ngValue="">Select</option>
-              <option *ngFor="let m of mealpreference" ngValue="{{ m.id }}">
-                <h4>{{ m.value }}</h4>
-              </option>
-            </select>
-    
-          </div>
-          <div class="form-group">
-            <label for="numberOfMeals">Meal Combo : </label>
-            <select id="numberOfMeals" name="numberOfMeals" ngModel>
-              <option ngValue="">Select</option>
-              <option *ngFor="let m of noofmeals" ngValue="{{ m.id }}">
-                <h4>{{ m.value }}</h4>
-              </option>
-            </select>
-          </div>
-        
-          <!-- <div class="form-group">
-            <label for="numberOfMeals">Number of Meals : </label>
-            <input type="number" id="numberOfMeals" name="numberOfMeals">
-          </div>-->
-        </div>
-        
-        <div *ngIf="selectedBookingType === 'Both'">
-          <h3>Flight Details</h3>
-        
-          <div class="form-group">
-            <label for="flightType">Type of Flight</label>
-            
-          </div>
-          <div>
-            <label>
-              Type of Flight : <input type="radio" name="flightSelection" value="international" ngModel>International
-              <input type="radio" name="flightSelection" value="domestic" ngModel>Domestic<br><br>
-            </label>
-          </div>
-          <div class="form-group">
-            <div class="row">
-              <div class="col">
-                <label for="departure">Departure : </label>
-                <input type="date" id="departure" name="departure" ngModel>
-              </div>
-              <div class="col">
-                <label for="return">Return : </label>
-                <input type="date" id="return" name="return" ngModel>
-              </div>
-            </div>
-          </div>
-        
-          <div class="form-group">
-            <div class="row">
-              <div class="col">
-                <label for="from">From: </label>
-                <select id="from" name="from" ngModel  required>
-                  <option ngValue="">Select</option>
-                  <option *ngFor="let m of cities" ngValue="{{ m.id }}">
-                    <h4>{{ m.value }}</h4>
-                  </option>
-                </select>
-              </div>
-              <div class="col">
-                <label for="to">To: </label>
-                <select id="to" name="to" ngModel required>
-                  <option ngValue="">Select</option>
-                  <option *ngFor="let m of cities" ngValue="{{ m.id }}">
-                    <h4>{{ m.value }}</h4>
-                  </option>
-                </select>
-              </div>
-            </div>
-          </div>
-        
-          <div class="form-group">
-            <label for="visaNumber">Visa Number : </label>
-            <input type="text" id="visaNumber" name="visaNumber" ngModel>
-          </div>
-        
-          <div class="form-group">
-            <div class="row">
-              <div class="col">
-                <label for="visaFile">Visa File : </label>
-                <input type="file" id="visaFile" name="visaFile" ngModel>
-              </div>
-            </div>
-          </div>
-        
-          <div class="form-group">
-            <label for="passportNumber">Passport Number :</label>
-            <input type="text" id="passportNumber" name="passportNumber" ngModel>
-          </div>
-        
-          <div class="form-group">
-            <div class="row">
-              <div class="col">
-                <label for="passportFile">Passport File : </label>
-                <input type="file" id="passportFile" name="passportFile" ngModel>
-              </div>
-            </div>
-          </div>
-          <h3>Hotel Details</h3>
-        
-          <div class="form-group">
-            <div class="row">
-              <div class="col">
-            <label for="stayingFrom">Check-in :</label>
-            <input type="date" id="stayingFrom" name="stayingFrom" ngModel>
-          </div>
-          <div class="col">
-            <label for="stayingTill">Check-out : </label>
-            <input type="date" id="stayingTill" name="stayingTill" ngModel>
-          </div>
-        </div>
-        </div>
-        
-          <!-- <input type="checkbox" id="checkHotel" (click)="checkHotelMeal()" [(ngModel)]="checkHotel" [ngModelOptions]="{standalone: true}">
-
-          <label for="checkHotel">Hotel Required</label> -->
-  
-  
-  
-  
-          <!--Meal Preference-->
-  
-          <div class="form-group">
-            <label for="mealPreference">Meal Preference : </label>
-            <select id="mealPreference" name="mealPreference" ngModel>
-              <option ngValue="">Select</option>
-              <option *ngFor="let m of mealpreference" ngValue="{{ m.id }}">
-                <h4>{{ m.value }}</h4>
-              </option>
-            </select>
-    
-          </div>
-          
-
-            <div class="form-group">
-              <label for="numberOfMeals">Meal Combo You Want: </label>
-              <select id="numberOfMeals" name="numberOfMeals" ngModel>
-                <option ngValue="">Select</option>
-                <option *ngFor="let m of noofmeals" ngValue="{{ m.id }}">
-                  <h4>{{ m.value }}</h4>
-                </option>
-              </select>
-            </div>
-            </div>
-        
-        
-
- <button type="submit"> Save and continue</button>
   </form>
-</div>
 
+</div>
+<lib-ng-toast></lib-ng-toast>

@@ -18,18 +18,18 @@
       <!-- First Name Column -->
       <ng-container matColumnDef="userName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let row"> {{row.userName}}</td>
+        <td mat-cell *matCellDef="let row"> {{row.userName | titlecase}}</td>
       </ng-container>
   
       <!-- Last Name Column -->
       <ng-container matColumnDef="projectName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Project</th>
-        <td mat-cell *matCellDef="let row"> {{row.projectName}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.projectName | titlecase}} </td>
       </ng-container>
 
       <ng-container matColumnDef="managerName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Manager</th>
-        <td mat-cell *matCellDef="let row"> {{row.managerName}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.managerName | titlecase}} </td>
       </ng-container>
   
 
@@ -47,12 +47,12 @@
 
       <ng-container matColumnDef="reasonForTravelling">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Reason </th>
-        <td mat-cell *matCellDef="let row"> {{row.reasonForTravelling}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.reasonForTravelling | titlecase}} </td>
       </ng-container>
 
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-        <td mat-cell *matCellDef="let row"> {{row.status}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.status | titlecase}} </td>
       </ng-container>
   
   
@@ -67,8 +67,11 @@
         <td mat-cell *matCellDef="let row">
           <button mat-icon-button [routerLink]="['/requestDetails', row.id]" class="mx-2" color="warn"><i class="fa fa-eye"
               aria-hidden="true"></i></button>
-          <button mat-icon-button (click)="edit(row.id)" class="mx-2" *ngIf="getUserRole()==='Employee'" color="accent"><i class="fa fa-pencil"
+          <button mat-icon-button (click)="edit(row.id)" class="mx-2" *ngIf="getUserRole()==='Employee' && row.status=='returned'; else other" color="accent"><i class="fa fa-pencil"
               aria-hidden="true"></i></button>
+              <ng-template #other>
+              <button mat-icon-button class="mx-2" color="accent"><i class="fa fa-pencil disabled"
+                aria-hidden="true"></i></button></ng-template>
           <button (click)="deleteRequest(row.id)" mat-icon-button color="primary"><i class="fa fa-trash" *ngIf="getUserRole()==='Employee'"
               aria-hidden="true"></i></button>
         </td>
